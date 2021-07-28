@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace RepoDownloader
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         string httpsTamplate = "https://";
         string domen;
@@ -21,12 +21,14 @@ namespace RepoDownloader
         string dropLink;
         string filename;
 
-        public Form1()
+        ToolTip toolTip = new ToolTip();
+
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void panel1_DragEnter(object sender, DragEventArgs e)
+        void DragNDropPanel_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
             {
@@ -35,12 +37,12 @@ namespace RepoDownloader
             }
         }
 
-        private void panel1_DragLeave(object sender, EventArgs e)
+        void DragNDropPanel_DragLeave(object sender, EventArgs e)
         {
             hintLabel.Text = "Перетащите ссылку сюда";
         }
 
-        private void panel1_DragDrop(object sender, DragEventArgs e)
+        void DragNDropPanel_DragDrop(object sender, DragEventArgs e)
         {
             hintLabel.Text = "Перетащите ссылку сюда";
 
@@ -50,21 +52,16 @@ namespace RepoDownloader
             domen = new Uri(dropLink).Host;
         }
 
-        async void panel1_Paint(object sender, PaintEventArgs e)
+        void DragNDropPanel_Paint(object sender, PaintEventArgs e)
         {
-            await Task.Run(async () =>
+            Pen pen = new Pen(Color.Black, 2)
             {
-                Pen pen = new Pen(Color.Black, 2);
-                for (int i = 30; i > 2; i--, await Task.Delay(30))
-                {
-                    panel1.CreateGraphics().Clear(SystemColors.Control);
-                    pen.DashPattern = new float[] { 2, i };
-                    panel1.CreateGraphics().DrawRectangle(pen, 1, 1, panel1.Width - 2, panel1.Height - 2);
-                }
-            });
+                DashPattern = new float[] { 2, 2 }
+            };
+            dragNDropPanel.CreateGraphics().DrawRectangle(pen, 1, 1, dragNDropPanel.Width - 2, dragNDropPanel.Height - 2);
         }
 
-        void button1_Click(object sender, EventArgs e)
+        void DownloadButton_Click(object sender, EventArgs e)
         {
             string url = dropLink;
             progressLabel.Text = "";
@@ -77,21 +74,25 @@ namespace RepoDownloader
             {
                 if (domen == "github.com")
                 {
-                    GetLinkAsync(url);
+                    GetLinkAsync(url, "d-flex flex-items-center color-text-primary text-bold no-underline p-3");
+                }
+                else if (domen == "gitlab.com")
+                {
+                    GetLinkAsync(url, "gl-button btn btn-sm btn-confirm");
                 }
             }
         }
 
-        async void GetLinkAsync(string url)
+        async void GetLinkAsync(string url, string cssClass)
         {
             IConfiguration config = Configuration.Default.WithDefaultLoader();
             IDocument document = await BrowsingContext.New(config).OpenAsync(url);
             IEnumerable<IElement> aElement = document.All.Where(m => m.LocalName == "a"
-                && m.ClassName == "d-flex flex-items-center color-text-primary text-bold no-underline p-3");
+                && m.ClassName == cssClass);
             repoLink = aElement.Last().GetAttribute("href");
             url = httpsTamplate + domen + repoLink;
             linkBox.Text = url;
-            button1.Enabled = false;
+            downloadButton.Enabled = false;
 
             filename = new Uri(url).Segments.Last();
 
@@ -102,7 +103,7 @@ namespace RepoDownloader
         void CreateRepoPath()
         {
             repoDirs = $@".\{domen}{Path.GetDirectoryName(repoLink)}";
-            Console.WriteLine($@"{repoDirs}\{filename}");
+
             if (!Directory.Exists(repoDirs))
             {
                 Directory.CreateDirectory(repoDirs);
@@ -123,9 +124,9 @@ namespace RepoDownloader
                     };
                     wc.DownloadFileCompleted += (s, e) =>
                     {
-                        button1.Enabled = true;
+                        downloadButton.Enabled = true;
                     };
-                    button1.Enabled = false;
+                    downloadButton.Enabled = false;
                     wc.DownloadFileAsync(new Uri(url), $@"{repoDirs}\{filename}");
                 }
                 catch (WebException err)
@@ -134,6 +135,12 @@ namespace RepoDownloader
                     Console.WriteLine(err.Response.Headers);
                 }
             }
+        }
+
+        void LinkBox_MouseHover(object sender, EventArgs e)
+        {
+            if (linkBox.Text != "")
+                toolTip.Show("Вы можете нажать на текст и с помощью стрелочек\nили клавишей Home/End перемещаться по тексту", window: linkBox);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace RepoDownloader
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,50 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.dragNDropPanel = new System.Windows.Forms.Panel();
             this.hintLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.downloadButton = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressLabel = new System.Windows.Forms.Label();
             this.linkBox = new System.Windows.Forms.RichTextBox();
-            this.panel1.SuspendLayout();
+            this.dragNDropPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // dragNDropPanel
             // 
-            this.panel1.AllowDrop = true;
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.hintLabel);
-            this.panel1.Location = new System.Drawing.Point(15, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(457, 141);
-            this.panel1.TabIndex = 0;
-            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
-            this.panel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel1_DragEnter);
-            this.panel1.DragLeave += new System.EventHandler(this.panel1_DragLeave);
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.dragNDropPanel.AllowDrop = true;
+            this.dragNDropPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.dragNDropPanel.Controls.Add(this.hintLabel);
+            this.dragNDropPanel.Location = new System.Drawing.Point(12, 12);
+            this.dragNDropPanel.Name = "dragNDropPanel";
+            this.dragNDropPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.dragNDropPanel.Size = new System.Drawing.Size(460, 141);
+            this.dragNDropPanel.TabIndex = 0;
+            this.dragNDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragNDropPanel_DragDrop);
+            this.dragNDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragNDropPanel_DragEnter);
+            this.dragNDropPanel.DragLeave += new System.EventHandler(this.DragNDropPanel_DragLeave);
+            this.dragNDropPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DragNDropPanel_Paint);
             // 
             // hintLabel
             // 
             this.hintLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.hintLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hintLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.hintLabel.Location = new System.Drawing.Point(3, 53);
+            this.hintLabel.Location = new System.Drawing.Point(10, 10);
             this.hintLabel.Name = "hintLabel";
-            this.hintLabel.Size = new System.Drawing.Size(451, 37);
+            this.hintLabel.Size = new System.Drawing.Size(440, 121);
             this.hintLabel.TabIndex = 0;
             this.hintLabel.Text = "Перетащите ссылку сюда";
             this.hintLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // downloadButton
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(169, 311);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(146, 38);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Скачать";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.downloadButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.downloadButton.Location = new System.Drawing.Point(169, 311);
+            this.downloadButton.Name = "downloadButton";
+            this.downloadButton.Size = new System.Drawing.Size(146, 38);
+            this.downloadButton.TabIndex = 2;
+            this.downloadButton.Text = "Скачать";
+            this.downloadButton.UseVisualStyleBackColor = true;
+            this.downloadButton.Click += new System.EventHandler(this.DownloadButton_Click);
             // 
             // progressBar1
             // 
@@ -88,9 +90,8 @@
             this.progressLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.progressLabel.Location = new System.Drawing.Point(12, 177);
             this.progressLabel.Name = "progressLabel";
-            this.progressLabel.Size = new System.Drawing.Size(227, 17);
+            this.progressLabel.Size = new System.Drawing.Size(0, 17);
             this.progressLabel.TabIndex = 4;
-            this.progressLabel.Text = "Здесь будет отображаться прогресс";
             // 
             // linkBox
             // 
@@ -105,8 +106,9 @@
             this.linkBox.Size = new System.Drawing.Size(457, 17);
             this.linkBox.TabIndex = 5;
             this.linkBox.Text = "";
+            this.linkBox.MouseHover += new System.EventHandler(this.LinkBox_MouseHover);
             // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -114,14 +116,14 @@
             this.Controls.Add(this.linkBox);
             this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.downloadButton);
+            this.Controls.Add(this.dragNDropPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RepoDownloader";
-            this.panel1.ResumeLayout(false);
+            this.dragNDropPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,9 +131,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel dragNDropPanel;
         private System.Windows.Forms.Label hintLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button downloadButton;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label progressLabel;
         private System.Windows.Forms.RichTextBox linkBox;
