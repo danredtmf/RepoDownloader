@@ -142,5 +142,31 @@ namespace RepoDownloader
             if (linkBox.Text != "")
                 toolTip.Show("Вы можете нажать на текст и с помощью стрелочек\nили клавишей Home/End перемещаться по тексту", window: linkBox);
         }
+
+        void SearchButton_Click(object sender, EventArgs e)
+        {
+            OpenSearch();
+        }
+
+        void OpenSearch()
+        {
+            if (searchBox.Text != "")
+                if (!Application.OpenForms.OfType<SearchWindow>().Any())
+                    new SearchWindow(searchBox.Text, this).Show();
+        }
+
+        public void SetLink(string link)
+        {
+            dropLink = link;
+            linkBox.Text = dropLink;
+
+            domen = new Uri(dropLink).Host;
+        }
+
+        private void SearchBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                OpenSearch();
+        }
     }
 }

@@ -34,6 +34,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressLabel = new System.Windows.Forms.Label();
             this.linkBox = new System.Windows.Forms.RichTextBox();
+            this.searchBox = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.Button();
             this.dragNDropPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,10 +44,10 @@
             this.dragNDropPanel.AllowDrop = true;
             this.dragNDropPanel.BackColor = System.Drawing.SystemColors.Control;
             this.dragNDropPanel.Controls.Add(this.hintLabel);
-            this.dragNDropPanel.Location = new System.Drawing.Point(12, 12);
+            this.dragNDropPanel.Location = new System.Drawing.Point(12, 39);
             this.dragNDropPanel.Name = "dragNDropPanel";
             this.dragNDropPanel.Padding = new System.Windows.Forms.Padding(10);
-            this.dragNDropPanel.Size = new System.Drawing.Size(460, 141);
+            this.dragNDropPanel.Size = new System.Drawing.Size(460, 114);
             this.dragNDropPanel.TabIndex = 0;
             this.dragNDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragNDropPanel_DragDrop);
             this.dragNDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragNDropPanel_DragEnter);
@@ -59,7 +61,7 @@
             this.hintLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.hintLabel.Location = new System.Drawing.Point(10, 10);
             this.hintLabel.Name = "hintLabel";
-            this.hintLabel.Size = new System.Drawing.Size(440, 121);
+            this.hintLabel.Size = new System.Drawing.Size(440, 94);
             this.hintLabel.TabIndex = 0;
             this.hintLabel.Text = "Перетащите ссылку сюда";
             this.hintLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -108,11 +110,32 @@
             this.linkBox.Text = "";
             this.linkBox.MouseHover += new System.EventHandler(this.LinkBox_MouseHover);
             // 
+            // searchBox
+            // 
+            this.searchBox.Location = new System.Drawing.Point(12, 12);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(355, 20);
+            this.searchBox.TabIndex = 6;
+            this.searchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchBox_KeyPress);
+            // 
+            // searchButton
+            // 
+            this.searchButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.searchButton.Location = new System.Drawing.Point(373, 10);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(99, 23);
+            this.searchButton.TabIndex = 7;
+            this.searchButton.Text = "Поиск";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.SearchButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 361);
+            this.Controls.Add(this.searchButton);
+            this.Controls.Add(this.searchBox);
             this.Controls.Add(this.linkBox);
             this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.progressBar1);
@@ -137,6 +160,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label progressLabel;
         private System.Windows.Forms.RichTextBox linkBox;
+        private System.Windows.Forms.TextBox searchBox;
+        private System.Windows.Forms.Button searchButton;
     }
 }
 
